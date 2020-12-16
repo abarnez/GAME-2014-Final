@@ -9,6 +9,9 @@ public class ShrinkingPlatform : MonoBehaviour
     private Vector3 start;
     private Vector3 end;
     private float secondsForOneLength = 2f;
+
+    public AudioSource shrink;
+    public AudioSource grow;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +43,7 @@ public class ShrinkingPlatform : MonoBehaviour
         if (transform.localScale.x > 0.0f)
         {
             transform.localScale -= new Vector3(0.001f, 0.001f, 0.0f);
+           
         }
     }
 
@@ -48,6 +52,7 @@ public class ShrinkingPlatform : MonoBehaviour
         if (transform.localScale.x < 1.0f)
         {
             transform.localScale += new Vector3(0.001f, 0.001f, 0.0f);
+          
         }
     }
 
@@ -56,6 +61,7 @@ public class ShrinkingPlatform : MonoBehaviour
        if (other.gameObject.CompareTag("Player"))
         {
             playerOn = true;
+            shrink.Play();
         }
     }
 
@@ -63,6 +69,7 @@ public class ShrinkingPlatform : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            grow.Play();
             playerOn = false;
         }
     }
