@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class ShrinkingPlatform : MonoBehaviour
 {
-    private bool PlayerOn;
+    private bool playerOn;
+    public Transform dest;
+    private Vector3 start;
+    private Vector3 end;
+    private float secondsForOneLength = 2f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        start = transform.position;
+        end = dest.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = new Vector3(transform.position.x,
-         groundLevel.y + Mathf.PingPong(Time.time, 1), 0.0f);
-        if (PlayerOn)
+
+        transform.position = Vector3.Lerp(start, end,
+        Mathf.SmoothStep(0f, 1f,
+         Mathf.PingPong(Time.time / secondsForOneLength, 1f)
+       ));
+
+        if (playerOn)
         {
             Shrink();
-        } else if (!PlayerOn)
+        } else if (!playerOn)
         {
             Grow();
         }
@@ -46,7 +55,7 @@ public class ShrinkingPlatform : MonoBehaviour
     {
        if (other.gameObject.CompareTag("Player"))
         {
-            PlayerOn = true;
+            playerOn = true;
         }
     }
 
@@ -54,7 +63,7 @@ public class ShrinkingPlatform : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            PlayerOn = false;
+            playerOn = false;
         }
     }
 }
